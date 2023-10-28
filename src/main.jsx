@@ -8,6 +8,12 @@ import NuevoCliente, {
 } from "./pages/NuevoCliente";
 import Index, { loader as clientesLoader } from "./pages/Index";
 import ErrorPage from "./componentes/ErrorPage";
+import EditarCliente, {
+  loader as editarClienteLoader,
+  action as editarClienteAction,
+} from "./pages/EditarCliente";
+import { action as eliminarClienteAction } from "./componentes/Cliente";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,10 +29,23 @@ const router = createBrowserRouter([
         path: "/clientes/nuevo",
         element: <NuevoCliente />,
         action: nuevoClienteAction,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/clientes/:clienteId/editar",
+        element: <EditarCliente />,
+        loader: editarClienteLoader,
+        action: editarClienteAction,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/clientes/:clienteId/eliminar",
+        action: eliminarClienteAction,
       },
     ],
   },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
